@@ -32,16 +32,16 @@
 
 //第二题
 
-const fp = require('lodash/fp')
+// const fp = require('lodash/fp')
 
-const cars = [
-	{  name:'Ferrari FF',horsepower:660,dollar_value:700000,in_stock:true },
-	{ name:'Spyker C12 Zagato',horsepower:650,dollar_value:64800,in_stock:false },
-	{  name:'Jaguar XKR-S',horsepower:550,dollar_value:132000,in_stock:false },
-	{  name:'Audi R8',horsepower:525,dollar_value:142000,in_stock:false },
-	{  name:'Aston Martin One-77',horsepower:750,dollar_value:1850000,in_stock:true },
-	{  name:'Pagani Huayra',horsepower:700,dollar_value:1300000,in_stock:false },
-]
+// const cars = [
+// 	{  name:'Ferrari FF',horsepower:660,dollar_value:700000,in_stock:true },
+// 	{ name:'Spyker C12 Zagato',horsepower:650,dollar_value:64800,in_stock:false },
+// 	{  name:'Jaguar XKR-S',horsepower:550,dollar_value:132000,in_stock:false },
+// 	{  name:'Audi R8',horsepower:525,dollar_value:142000,in_stock:false },
+// 	{  name:'Aston Martin One-77',horsepower:750,dollar_value:1850000,in_stock:true },
+// 	{  name:'Pagani Huayra',horsepower:700,dollar_value:1300000,in_stock:false },
+// ]
 
 //1
 //使用函数组合fp.flowRight重新实现下面这个函数
@@ -121,13 +121,59 @@ const cars = [
 // console.log(ex3(user))
 
 //4
-const {Maybe,Container} = require('./support.js')
-let ex4 = function(n) {
-	if(n)
-	return parseInt(n)
-}
-let ex5 = function(n) {
-	return Maybe.of(n).map(n => parseInt(n))._value
-}
+// const {Maybe,Container} = require('./support.js')
+// let ex4 = function(n) {
+// 	if(n)
+// 	return parseInt(n)
+// }
+// //重写：
+// let ex4 = function(n) {
+// 	return Maybe.of(n).map(n => parseInt(n))._value
+// }
 
-console.log(ex4(5.5),ex5(5.5))
+// console.log(ex4(5.5),ex5(5.5))
+
+//手写promise
+
+const MyPromise = require('./myPromise.js')
+
+// let promise = new MyPromise((resolve,reject) => {
+// 	setTimeout(() => {
+// 		resolve('success')
+// 	},2000)
+// } )
+
+let p3= new MyPromise((resolve,reject) => {
+	setTimeout(() => {
+		resolve('p1')
+	},1000)
+})
+
+let promise2 = new MyPromise((resolve,reject) => {
+	//resolve('other')
+	resolve('success2')
+})
+
+let p1 = new MyPromise((resolve,reject) => {
+	setTimeout(() => {
+		resolve('p1')
+	},2000)
+})
+
+// promise.then(value => {console.log(value)
+// return value}).then().then(value => console.log(value+'123'))
+
+// let p = promise.then(value => {
+// 	console.log(value)
+// 	return p
+// })
+
+// p.then(value => console.log(value),reason =>{console.log(reason)})
+
+// MyPromise.all(['a','b',promise2,promise]).finally(() => {
+// 	console.log('finally')
+// }).then(res => console.log(res))
+
+ // promise2.then(res => console.log('res')).catch(reason => console.log(reason))
+ 
+ MyPromise.allSettled([p3,promise2,'1000']).then(value => console.log(value))
